@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag Reduction Using Air Lubrication System | Physics Project</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --non-photo-blue: #8FCAD0ff;
+            --cerulean: #186986ff;
+            --light-blue: #C7E5EDff;
+            --teal: #3E7D88ff;
+            --moonstone: #6FB7C6ff;
+            --dark: #0a1930;
+            --light: #f5f9ff;
+            --gray: #5f6368;
+            --success: #4caf50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: var(--light-blue);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        header {
+            background: linear-gradient(to right, var(--cerulean), var(--teal));
+            color: white;
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 1.8rem;
+            color: var(--non-photo-blue);
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .hero {
+            background: url('Photos/Boat.png') center/cover no-repeat;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 25, 48, 0.7);
+        }
+        
+        .hero-content {
+            position: relative;
+            color: white;
+            max-width: 800px;
+            padding: 2rem;
+        }
+        
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--moonstone);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--moonstone);
+            box-shadow: 0 4px 15px rgba(111, 183, 198, 0.3);
+        }
+        
+        .btn:hover {
+            background: transparent;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(111, 183, 198, 0.4);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            margin-left: 15px;
+        }
+        
+        .btn-outline:hover {
+            background: white;
+            color: var(--cerulean);
+        }
+        
+        section {
+            padding: 5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--teal);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--moonstone);
+            border-radius: 2px;
+        }
+        
+        .section-header p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .about-text h3 {
+            font-size: 1.8rem;
+            color: var(--teal);
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-text p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .project-img {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            height: 400px;
+            background: url('Photos/Boat2.png') center/cover;
+        }
+        
+        .team {
+            background: var(--light-blue);
+        }
+        
+        .team-members {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .member {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .member:hover {
+            transform: translateY(-10px);
+        }
+        
+        .member-img {
+            height: 200px;
+            background: var(--moonstone);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 5rem;
+        }
+        
+        .member-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .member-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .member-info p {
+            color: var(--gray);
+            font-style: italic;
+        }
+        
+        .resources {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .resource-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .resource-img {
+            height: 200px;
+            background: linear-gradient(45deg, var(--non-photo-blue), var(--moonstone));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+        }
+        
+        .resource-info {
+            padding: 1.5rem;
+        }
+        
+        .resource-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--teal);
+        }
+        
+        .resource-info p {
+            margin-bottom: 1.5rem;
+            color: var(--gray);
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 3rem;
+        }
+        
+        .chart-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .chart-header h3 {
+            font-size: 1.5rem;
+            color: var(--teal);
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .data-table th, .data-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .data-table th {
+            background: var(--teal);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .data-table tr:nth-child(even) {
+            background-color: var(--light-blue);
+        }
+        
+        .data-table tr:hover {
+            background-color: var(--non-photo-blue);
+            color: white;
+        }
+        
+        .efficiency {
+            background: var(--light-blue);
+        }
+        
+        .efficiency-content {
+            display: grid;
+            /*grid-template-columns: 1fr 1fr;*/
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .conclusion {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .conclusion h3 {
+            font-size: 1.8rem;
+            color: var(--teal);
+            margin-bottom: 1.5rem;
+        }
+        
+        .conclusion p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .percent {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--success);
+            margin: 1rem 0;
+            text-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        
+        footer {
+            background: var(--cerulean);
+            color: white;
+            padding: 3rem 5%;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--non-photo-blue);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--light-blue);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--non-photo-blue);
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            color: var(--moonstone);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 992px) {
+            .about-content, .efficiency-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .project-img {
+                height: 300px;
+            }
+            
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+            
+            .hero {
+                height: 70vh;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-water"></i>
+                <h1>Team Hydronix</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#team">Team</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="#data">Data</a></li>
+                    <li><a href="#conclusion">Conclusion</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Drag Reduction Using Air Lubrication System</h2>
+            <p>A Class 12 Physics Project exploring how air bubbles can reduce hydrodynamic drag and improve marine efficiency</p>
+            <div class="hero-btns">
+                <a href="#about" class="btn">Explore Project</a>
+                <a href="#resources" class="btn btn-outline">View Resources</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="section-header">
+            <h2>About The Project</h2>
+            <p>Exploring the science behind air lubrication systems and their application in marine drag reduction</p>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Project Overview</h3>
+                <p>This project, titled "Drag Reduction Using Air Lubrication System", was undertaken as part of the Class 12 Physics curriculum with the aim of applying classroom concepts to a practical and innovation-driven experiment.</p>
+                <p>The project explores how introducing a layer of air beneath a moving body in water can help reduce resistance and enhance motion efficiency. As a team, we designed and built a working model to simulate the functioning of an Air Lubrication System (ALS).</p>
+                <p>By conducting comparative tests - with and without air lubrication - we were able to measure and analyze the system's impact on performance. Through these experiments, we observed a noticeable improvement in acceleration and calculated the relative increase in efficiency.</p>
+                <a href="https://docs.google.com/document/d/1HlfiWnfHMFxjSnjoUNJptoMXxcDLD4b9S9c3757Y3UE/edit?usp=sharing" class="btn">Download Full Report</a>
+            </div>
+            <div class="project-img" style="padding: 0;">
+                <img src="Photos/boat2.jpeg" alt="Air Lubrication Boat" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team" id="team">
+        <div class="section-header">
+            <h2>Project Team</h2>
+            <p>The dedicated students behind this innovative physics project</p>
+        </div>
+        <div class="team-members">
+            <div class="member">
+                <div class="member-img">
+                    <img src="Photos/burhan.png" alt="Burhan Bharmal" style="width: 100%; height: 100%; object-fit: contain;"></i>
+                </div>
+                <div class="member-info">
+                    <h3>Burhan Bharmal</h3>
+                    <p>Project Lead</p>
+                </div>
+            </div>
+            <div class="member">
+                <div class="member-img">
+                    <img src="Photos/manan.png" alt="Manan Rank" style="width: 100%; height: 100%; object-fit: contain;"></i>
+                </div>
+                <div class="member-info">
+                    <h3>Manan Rank</h3>
+                    <p>Research & Development</p>
+                </div>
+            </div>
+            <div class="member">
+                <div class="member-img">
+                    <img src="Photos/Hrishi.png" alt="Hrishikesh Mandaliya" style="width: 100%; height: 100%; object-fit: contain;">
+                </div>
+                <div class="member-info">
+                    <h3>Hrishikesh Mandaliya</h3>
+                    <p>Data Analysis</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section id="resources">
+        <div class="section-header">
+            <h2>Project Resources</h2>
+            <p>Access all materials related to our air lubrication research</p>
+        </div>
+        <div class="resources">
+            <div class="resource-card">
+                <div class="resource-img">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="resource-info">
+                    <h3>Project Report</h3>
+                    <p>Complete project documentation including theory, methodology, data analysis, and conclusions.</p>
+                    <a href="https://docs.google.com/document/d/1HlfiWnfHMFxjSnjoUNJptoMXxcDLD4b9S9c3757Y3UE/edit?usp=sharing" class="btn">Download PDF</a>
+                </div>
+            </div>
+            <div class="resource-card">
+                <div class="resource-img">
+                    <i class="fas fa-video"></i>
+                </div>
+                <div class="resource-info">
+                    <h3>Project Video</h3>
+                    <p>Demonstration of our RC ship model with and without air lubrication system.</p>
+                    <a href="https://youtu.be/9dFuhJOgQmw?feature=shared" class="btn">Watch Video</a>
+                </div>
+            </div>
+            <div class="resource-card">
+                <div class="resource-img">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="resource-info">
+                    <h3>Data Charts</h3>
+                    <p>Interactive charts and graphs showing our experimental results and efficiency gains.</p>
+                    <a href="#data" class="btn">View Charts</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data Section -->
+    <section class="data" id="data">
+        <div class="section-header">
+            <h2>Experimental Data</h2>
+            <p>Quantitative analysis of our air lubrication system performance</p>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h3>Acceleration Comparison</h3>
+            </div>
+            <canvas id="accelerationChart"></canvas>
+        </div>
+        
+        <div class="chart-container">
+            <div class="chart-header">
+                <h3>Efficiency Improvement</h3>
+            </div>
+            <canvas id="efficiencyChart"></canvas>
+        </div>
+        
+        <h3 style="text-align: center; margin: 2rem 0 1rem; color: var(--teal);">Experimental Data Table</h3>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>No Bubbles</th>
+                    <th>0.6 mm Holes</th>
+                    <th>1.0 mm Holes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1 m</td>
+                    <td>0.52 m/s²</td>
+                    <td>0.62 m/s²</td>
+                    <td>0.57 m/s²</td>
+                </tr>
+                <tr>
+                    <td>1.5 m</td>
+                    <td>0.54 m/s²</td>
+                    <td>0.63 m/s²</td>
+                    <td>0.58 m/s²</td>
+                </tr>
+                <tr>
+                    <td>2 m</td>
+                    <td>0.54 m/s²</td>
+                    <td>0.64 m/s²</td>
+                    <td>0.56 m/s²</td>
+                </tr>
+                <tr>
+                    <td>2.5 m</td>
+                    <td>0.55 m/s²</td>
+                    <td>0.66 m/s²</td>
+                    <td>0.57 m/s²</td>
+                </tr>
+                <tr>
+                    <td>Average</td>
+                    <td>0.54 m/s²</td>
+                    <td>0.64 m/s²</td>
+                    <td>0.57 m/s²</td>
+                </tr>
+                <tr>
+                    <td>Time Taken</td>
+                    <td>3.33 s</td>
+                    <td>3.06 s</td>
+                    <td>3.24 s</td>
+                </tr>
+                <tr>
+                    <td>Efficiency</td>
+                    <td>16.91%</td>
+                    <td>21.81%</td>
+                    <td>18.35%</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Efficiency Section -->
+    <section class="efficiency" id="conclusion">
+        <div class="section-header">
+            <h2>Conclusion & Efficiency</h2>
+            <p>Key findings and efficiency improvements from our research</p>
+        </div>
+        <div class="efficiency-content">
+            <div>
+                <div class="conclusion">
+                    <h3>Project Success</h3>
+                    <p>This project successfully demonstrated the working of an air lubrication system on a 50 cm 3D-printed boat. By injecting air bubbles beneath the hull, we created a layer of air between the water and the boat's surface, resulting in smoother movement and better overall performance.</p>
+                    <p>During testing, the system consistently improved the boat's speed and reduced motor load, leading to a total efficiency gain of:</p>
+                    <div class="percent">6%</div>
+                    <p>The model operated as intended, and all components worked in coordination to achieve the desired effect. This confirmed that introducing air into the water around the hull can positively impact the movement and energy usage of small watercraft.</p>
+                </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-water"></i>
+            </div>
+            <p>Drag Reduction Using Air Lubrication System - Class 12 Physics Project</p>
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#team">Team</a>
+                <a href="#resources">Resources</a>
+                <a href="#data">Data</a>
+                <a href="#conclusion">Conclusion</a>
+            </div>
+            <div class="copyright">
+                &copy; 2025 Hydronix Project Team. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Acceleration Chart
+            const accCtx = document.getElementById('accelerationChart').getContext('2d');
+            const accelerationChart = new Chart(accCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['No Bubbles', '0.6 mm Holes', '1.0 mm Holes'],
+                    datasets: [{
+                        label: 'Average Acceleration (m/s²)',
+                        data: [0.54, 0.64, 0.57],
+                        backgroundColor: [
+                            'rgba(62, 125, 136, 0.7)',
+                            'rgba(111, 183, 198, 0.7)',
+                            'rgba(143, 202, 208, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(62, 125, 136)',
+                            'rgb(111, 183, 198)',
+                            'rgb(143, 202, 208)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Acceleration (m/s²)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Efficiency Chart
+            const effCtx = document.getElementById('efficiencyChart').getContext('2d');
+            const efficiencyChart = new Chart(effCtx, {
+                type: 'line',
+                data: {
+                    labels: ['1m', '1.5m', '2m', '2.5m'],
+                    datasets: [
+                        {
+                            label: 'No Bubbles',
+                            data: [0.52, 0.54, 0.54, 0.55],
+                            borderColor: 'rgb(62, 125, 136)',
+                            backgroundColor: 'rgba(62, 125, 136, 0.1)',
+                            tension: 0.3,
+                            fill: true
+                        },
+                        {
+                            label: '0.6 mm Holes',
+                            data: [0.62, 0.63, 0.64, 0.66],
+                            borderColor: 'rgb(111, 183, 198)',
+                            backgroundColor: 'rgba(111, 183, 198, 0.1)',
+                            tension: 0.3,
+                            fill: true
+                        },
+                        {
+                            label: '1.0 mm Holes',
+                            data: [0.57, 0.58, 0.56, 0.57],
+                            borderColor: 'rgb(143, 202, 208)',
+                            backgroundColor: 'rgba(143, 202, 208, 0.1)',
+                            tension: 0.3,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: 'Acceleration (m/s²)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Distance'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
